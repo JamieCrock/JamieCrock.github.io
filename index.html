@@ -328,6 +328,40 @@ h3 { font-family: var(--display); font-weight: 650; font-size: 19px; line-height
 
 .code-caption { font-family: var(--mono); font-size: 12.5px; color: var(--muted); margin-top: 14px; }
 
+.demo-frame {
+  border: 1px solid var(--border-strong);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--surface);
+  box-shadow: 0 14px 44px rgba(0, 0, 0, 0.5);
+}
+.demo-frame-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 11px 16px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--muted);
+}
+.demo-frame-bar .status { color: var(--blue-bright); display: flex; align-items: center; gap: 7px; }
+.demo-frame-bar .status::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--blue);
+  box-shadow: 0 0 8px var(--blue);
+}
+.demo-frame iframe { display: block; width: 100%; height: 720px; border: 0; background: var(--surface); }
+
+@media (max-width: 880px) {
+  .demo-frame iframe { height: 620px; }
+}
+
 .ref-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
 
 .note {
@@ -400,6 +434,7 @@ footer.site { border-top: 1px solid var(--border); background: var(--surface); p
     <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="pageNav">menu</button>
     <nav class="pages" id="pageNav" aria-label="Site pages">
       <a href="#/home" data-page="home">home</a>
+      <a href="#/demo" data-page="demo">demo</a>
       <a href="#/grades" data-page="grades">grades</a>
       <a href="#/projects" data-page="projects">projects</a>
       <a href="#/code" data-page="code">code</a>
@@ -419,8 +454,8 @@ footer.site { border-top: 1px solid var(--border); background: var(--surface); p
         <h1>Jamie Crockett<span class="accent">.</span></h1>
         <p class="lede">Machine learning engineer and applied AI researcher. My first-class dissertation modelled the temporal decay of AI detectability across 789,992 samples, built on a random forest detector reaching 97% accuracy.</p>
         <div class="cta-row">
-          <a class="btn primary" href="#/projects">View projects</a>
-          <a class="btn ghost" href="#/code">Read the code</a>
+          <a class="btn primary" href="#/demo">Try the live detector</a>
+          <a class="btn ghost" href="#/projects">View projects</a>
           <a class="btn ghost" id="githubHeroLink" href="#" target="_blank" rel="noopener">GitHub</a>
         </div>
       </div>
@@ -448,6 +483,33 @@ footer.site { border-top: 1px solid var(--border); background: var(--surface); p
         <a class="btn ghost" href="#/grades">Academic record</a>
         <a class="btn ghost" href="#/experience">Work experience</a>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="page" id="page-demo">
+  <div class="wrap">
+    <span class="eyebrow">live demo</span>
+    <h2>Try the detector</h2>
+    <p class="sub">The classifier from my dissertation, running live. Paste any passage and it returns a probability that the text was machine generated, derived from linguistic features rather than a black-box API. Longer samples give more reliable results, so aim for at least a paragraph.</p>
+
+    <div class="demo-frame">
+      <div class="demo-frame-bar">
+        <span>linguistic-ai-detector</span>
+        <span class="status">live</span>
+      </div>
+      <iframe
+        src="https://linguisticaidetector.streamlit.app/?embed=true&embed_options=dark_theme"
+        title="Live AI text detector demo"
+        loading="lazy"
+        allow="clipboard-write"></iframe>
+    </div>
+
+    <p class="code-caption">Hosted on Streamlit Community Cloud. If the panel is idle it may take a few seconds to wake on first load.</p>
+
+    <div class="cta-row" style="margin-top: 22px;">
+      <a class="btn ghost" href="https://linguisticaidetector.streamlit.app" target="_blank" rel="noopener">Open in a new tab</a>
+      <a class="btn ghost" href="#/code">See the code</a>
     </div>
   </div>
 </section>
@@ -773,6 +835,7 @@ const CONFIG = {
       description: "Developed a research-grade AI detector using a random forest classifier over linguistic features, reaching 97% accuracy across test conditions. Modelled the temporal decay of detectability across 789,992 samples and multiple detection models, quantifying how evasion effectiveness shifts over successive transformations. Evaluated using accuracy, precision, recall, and F1 with comparative analysis across detectors.",
       tags: ["Python", "Java", "scikit-learn", "pandas", "NumPy", "Matplotlib"],
       repo: "ai-detectability-decay",
+      demo: "#/demo",
       media: null
     },
     {
@@ -888,6 +951,11 @@ function buildProjects() {
       links.appendChild(a);
     } else {
       links.appendChild(el("span", "meta", "Private client work"));
+    }
+    if (p.demo) {
+      const demoLink = el("a", null, "Live demo");
+      demoLink.href = p.demo;
+      links.appendChild(demoLink);
     }
     body.appendChild(links);
     card.appendChild(body);
