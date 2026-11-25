@@ -538,7 +538,7 @@ footer.site { border-top: 1px solid var(--border); background: var(--surface); p
         <span class="meta">St George's College Weybridge</span>
       </div>
       <table class="grade-table" id="alevelTable">
-        <thead><tr><th>Subject</th><th>Grade</th></tr></thead>
+        <thead><tr><th>Subject</th></tr></thead>
         <tbody></tbody>
       </table>
     </div>
@@ -816,16 +816,15 @@ const CONFIG = {
   ],
 
   aLevels: [
-    { name: "Mathematics", grade: "Add grade" },
-    { name: "Computer Science", grade: "Add grade" },
-    { name: "Economics", grade: "Add grade" }
+    { name: "Mathematics" },
+    { name: "Computer Science" },
+    { name: "Economics" }
   ],
 
   gcses: [
     { name: "Computing", grade: "8" },
     { name: "Mathematics", grade: "8" },
-    { name: "English Language", grade: "A*" },
-    { name: "7 further subjects", grade: "Add grades" }
+    { name: "English Language", grade: "A*" }
   ],
 
   projects: [
@@ -876,13 +875,13 @@ const CONFIG = {
 
   referees: [
     {
-      name: "Referee name",
+      name: null,
       role: "Dissertation supervisor",
       org: "Swansea University",
       note: "Academic reference covering dissertation research and degree performance."
     },
     {
-      name: "Referee name",
+      name: null,
       role: "Consulting lead",
       org: "Broadwater Consulting",
       note: "Professional reference covering NHS-focused AI and data consulting work."
@@ -904,7 +903,7 @@ function fillTable(id, rows) {
   rows.forEach(function (row) {
     const tr = document.createElement("tr");
     tr.appendChild(el("td", null, row.name));
-    tr.appendChild(el("td", "grade", row.grade));
+    if (row.grade !== undefined) tr.appendChild(el("td", "grade", row.grade));
     tbody.appendChild(tr);
   });
 }
@@ -978,10 +977,10 @@ function buildReferees() {
   CONFIG.referees.forEach(function (r) {
     const card = el("div", "card");
     const head = el("div", "card-head");
-    head.appendChild(el("h3", null, r.name));
+    head.appendChild(el("h3", null, r.name || r.role));
     head.appendChild(el("span", "meta", r.org));
     card.appendChild(head);
-    card.appendChild(el("span", "meta", r.role));
+    if (r.name) card.appendChild(el("span", "meta", r.role));
     card.appendChild(el("p", null, r.note));
     grid.appendChild(card);
   });
