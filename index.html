@@ -807,7 +807,7 @@ def plot_decay(results: dict[str, pd.DataFrame]) -&gt; None:
 const CONFIG = {
   githubUsername: "JamieCrock",
   linkedinUrl: "https://www.linkedin.com/in/jamie-crockett",
-  dissertationRepo: "ai-detectability-decay",
+  dissertationRepo: "ai_detectability_decay",
 
   degreeResults: [
     { name: "Degree classification", grade: "First Class Honours" },
@@ -834,8 +834,24 @@ const CONFIG = {
       period: "Dissertation research, 2025 to 2026",
       description: "Developed a research-grade AI detector using a random forest classifier over linguistic features, reaching 97% accuracy across test conditions. Modelled the temporal decay of detectability across 789,992 samples and multiple detection models, quantifying how evasion effectiveness shifts over successive transformations. Evaluated using accuracy, precision, recall, and F1 with comparative analysis across detectors.",
       tags: ["Python", "Java", "scikit-learn", "pandas", "NumPy", "Matplotlib"],
-      repo: "ai-detectability-decay",
+      repo: "ai_detectability_decay",
       demo: "#/demo",
+      media: null
+    },
+    {
+      title: "Order Matching Engine",
+      period: "Personal project, 2026",
+      description: "A price-time priority limit order book and matching engine in Java 21 with limit and market orders, GTC, IOC and FOK time in force, cancel, reduce and cancel/replace, plus an interactive shell and a latency benchmark. Tested differentially against a naive reference model over 100,000 random operations.",
+      tags: ["Java 21", "JUnit 5", "Maven", "Data structures"],
+      repo: "order-matching-engine",
+      media: null
+    },
+    {
+      title: "Image Recognition with scikit-learn",
+      period: "Builds on Big Data and Machine Learning coursework",
+      description: "Tuned and compared five classifiers with cross-validated grid search, reaching 99.1% test accuracy on handwritten digits (99.6% with shift augmentation). A robustness study showed that standardising pixels makes models collapse under small amounts of noise, and fixed it.",
+      tags: ["Python", "scikit-learn", "NumPy", "Matplotlib"],
+      repo: "image-recognition-sklearn",
       media: null
     },
     {
@@ -843,7 +859,8 @@ const CONFIG = {
       period: "University, Sep 2025 to Feb 2026",
       description: "Social platform with authentication, posts, direct messaging, and user profiles built on MVC architecture with Laravel, PHP, and MySQL. Designed and implemented a normalised MySQL schema and the server-side logic supporting the full feature set.",
       tags: ["Laravel", "PHP", "MySQL", "MVC"],
-      repo: "social-media-app",
+      repo: null,
+      note: "University coursework",
       media: null
     },
     {
@@ -851,15 +868,8 @@ const CONFIG = {
       period: "University, Sep 2025 to Dec 2025",
       description: "Computational mathematics and optimisation modelling, including level 1 data flow analysis in a critical system using SPARK Ada.",
       tags: ["SPARK Ada", "Data flow analysis", "Optimisation"],
-      repo: "sparkada-modelling",
-      media: null
-    },
-    {
-      title: "Image Recognition Coursework",
-      period: "Big Data and Machine Learning module",
-      description: "scikit-learn image recognition coursework completed as part of the Big Data and Machine Learning module, covering feature extraction, model training, and evaluation.",
-      tags: ["Python", "scikit-learn", "Image recognition"],
-      repo: "image-recognition-coursework",
+      repo: null,
+      note: "University coursework",
       media: null
     }
   ],
@@ -950,7 +960,7 @@ function buildProjects() {
       a.rel = "noopener";
       links.appendChild(a);
     } else {
-      links.appendChild(el("span", "meta", "Private client work"));
+      links.appendChild(el("span", "meta", p.note || "Private client work"));
     }
     if (p.demo) {
       const demoLink = el("a", null, "Live demo");
